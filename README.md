@@ -1,7 +1,7 @@
 # FactOrNot – Crowdsourced Truth in a World of Noise
 
 ### Link 
-https://github.com/KunalTakke/FactOrNotProject
+https://factornotproject.onrender.com/
 
 ![FactOrNot Screenshot](./docs/dashboard.png)
 
