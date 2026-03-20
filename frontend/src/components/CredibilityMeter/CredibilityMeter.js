@@ -18,10 +18,7 @@ function CredibilityMeter({ score, factVotes, notVotes, totalVotes }) {
   return (
     <div className="credibility-meter">
       <div className="credibility-header">
-        <span
-          className="credibility-label"
-          style={{ color: getColor(score) }}
-        >
+        <span className="credibility-label" style={{ color: getColor(score) }}>
           {getLabel(score)}
         </span>
         <span className="credibility-score" style={{ color: getColor(score) }}>

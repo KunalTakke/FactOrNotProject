@@ -5,7 +5,6 @@ const { ensureAuthenticated } = require("../middleware/auth");
 
 const router = express.Router();
 
-/* GET /api/claims - list all claims, optional channel filter, sorted by credibility */
 router.get("/", async (req, res) => {
   try {
     const db = getDb();
@@ -21,7 +20,8 @@ router.get("/", async (req, res) => {
     const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 20));
     const skip = (page - 1) * limit;
 
-    const sortField = req.query.sort === "newest" ? "createdAt" : "credibilityScore";
+    const sortField =
+      req.query.sort === "newest" ? "createdAt" : "credibilityScore";
     const sortOrder = req.query.sort === "newest" ? -1 : -1;
 
     const [claims, total] = await Promise.all([
@@ -42,7 +42,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* GET /api/claims/:id - single claim */
 router.get("/:id", async (req, res) => {
   try {
     const db = getDb();
@@ -61,19 +60,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/* POST /api/claims - create a new claim */
 router.post("/", ensureAuthenticated, async (req, res) => {
   try {
     const { title, description, channelId, sourceUrl } = req.body;
     if (!title || !channelId) {
-      return res
-        .status(400)
-        .json({ error: "Title and channel are required." });
+      return res.status(400).json({ error: "Title and channel are required." });
     }
 
     const db = getDb();
 
-    /* verify channel exists */
     let chId;
     try {
       chId = new ObjectId(channelId);
@@ -81,8 +76,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
       return res.status(400).json({ error: "Invalid channel ID." });
     }
     const channel = await db.collection("channels").findOne({ _id: chId });
-    if (!channel)
-      return res.status(404).json({ error: "Channel not found." });
+    if (!channel) return res.status(404).json({ error: "Channel not found." });
 
     const claim = {
       title: title.trim(),
@@ -111,7 +105,6 @@ router.post("/", ensureAuthenticated, async (req, res) => {
   }
 });
 
-/* PUT /api/claims/:id - edit a claim (owner only) */
 router.put("/:id", ensureAuthenticated, async (req, res) => {
   try {
     const db = getDb();
@@ -136,7 +129,9 @@ router.put("/:id", ensureAuthenticated, async (req, res) => {
     if (description !== undefined) updates.description = description.trim();
     if (sourceUrl !== undefined) updates.sourceUrl = sourceUrl.trim();
 
-    await db.collection("claims").updateOne({ _id: claimId }, { $set: updates });
+    await db
+      .collection("claims")
+      .updateOne({ _id: claimId }, { $set: updates });
 
     const updated = await db.collection("claims").findOne({ _id: claimId });
     res.json(updated);
@@ -146,7 +141,6 @@ router.put("/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-/* DELETE /api/claims/:id - delete a claim (owner only) */
 router.delete("/:id", ensureAuthenticated, async (req, res) => {
   try {
     const db = getDb();
@@ -173,10 +167,9 @@ router.delete("/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-/* POST /api/claims/:id/vote - vote Fact or Not */
 router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
   try {
-    const { vote } = req.body; /* "fact" or "not" */
+    const { vote } = req.body;
     if (vote !== "fact" && vote !== "not") {
       return res.status(400).json({ error: "Vote must be 'fact' or 'not'." });
     }
@@ -198,7 +191,6 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
     let inc = {};
 
     if (previousVote === vote) {
-      /* remove vote (toggle off) */
       inc = {
         [`${vote}Votes`]: -1,
         totalVotes: -1,
@@ -207,11 +199,9 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
       await db.collection("claims").updateOne({ _id: claimId }, unsetUpdate);
     } else {
       if (previousVote) {
-        /* switching vote */
         inc[`${previousVote}Votes`] = -1;
         inc[`${vote}Votes`] = 1;
       } else {
-        /* new vote */
         inc[`${vote}Votes`] = 1;
         inc.totalVotes = 1;
       }
@@ -224,7 +214,6 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
       );
     }
 
-    /* recalculate credibility score */
     const updated = await db.collection("claims").findOne({ _id: claimId });
     let credibilityScore = 50;
     if (updated.totalVotes > 0) {
@@ -244,7 +233,6 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
   }
 });
 
-/* POST /api/claims/:id/evidence - add evidence comment */
 router.post("/:id/evidence", ensureAuthenticated, async (req, res) => {
   try {
     const { comment, sourceUrl, supports } = req.body;

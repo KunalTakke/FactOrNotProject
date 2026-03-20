@@ -259,7 +259,6 @@ async function seed() {
   await db.collection("channels").deleteMany({});
   await db.collection("claims").deleteMany({});
 
-  /* Create users */
   console.log("Creating users...");
   const hashedPassword = await bcrypt.hash("password123", 10);
   const users = [];
@@ -272,7 +271,6 @@ async function seed() {
     users.push({ _id: result.insertedId, username });
   }
 
-  /* Create a demo user */
   const demoResult = await db.collection("users").insertOne({
     username: "demo",
     password: await bcrypt.hash("demo", 10),
@@ -281,7 +279,6 @@ async function seed() {
   users.push({ _id: demoResult.insertedId, username: "demo" });
   console.log(`Created ${users.length} users (login with demo/demo)`);
 
-  /* Create channels */
   console.log("Creating channels...");
   const channelDocs = [];
   for (const ch of CHANNELS) {
@@ -303,20 +300,24 @@ async function seed() {
   }
   console.log(`Created ${channelDocs.length} channels`);
 
-  /* Create 1000+ claims */
   console.log("Creating claims...");
   const claims = [];
   let claimCount = 0;
 
   for (const channel of channelDocs) {
     const templates = CLAIM_TEMPLATES[channel.name] || [];
-    /* Create many variations per channel */
-    const targetPerChannel = Math.max(100, Math.ceil(1050 / channelDocs.length));
+
+    const targetPerChannel = Math.max(
+      100,
+      Math.ceil(1050 / channelDocs.length)
+    );
 
     for (let i = 0; i < targetPerChannel; i++) {
       const template = templates[i % templates.length];
       const suffix =
-        i >= templates.length ? ` (Report #${Math.floor(i / templates.length) + 1})` : "";
+        i >= templates.length
+          ? ` (Report #${Math.floor(i / templates.length) + 1})`
+          : "";
       const author = randomItem(users);
       const factVotes = randomInt(0, 200);
       const notVotes = randomInt(0, 200);
@@ -324,7 +325,6 @@ async function seed() {
       const credibilityScore =
         totalVotes > 0 ? Math.round((factVotes / totalVotes) * 100) : 50;
 
-      /* Generate voters map */
       const voters = {};
       const voterSubset = [...users]
         .sort(() => Math.random() - 0.5)
@@ -333,7 +333,6 @@ async function seed() {
         voters[u._id.toString()] = Math.random() > 0.5 ? "fact" : "not";
       });
 
-      /* Generate some evidence comments */
       const evidenceCount = randomInt(0, 4);
       const evidence = [];
       for (let e = 0; e < evidenceCount; e++) {
@@ -345,18 +344,14 @@ async function seed() {
           supports: Math.random() > 0.5,
           author: evidenceAuthor.username,
           authorId: evidenceAuthor._id.toString(),
-          createdAt: randomDate(
-            new Date("2024-06-01"),
-            new Date("2025-03-01")
-          ),
+          createdAt: randomDate(new Date("2024-06-01"), new Date("2025-03-01")),
         });
       }
 
       claims.push({
         title: template + suffix,
         description: `Community submitted claim for verification in the ${channel.name} channel.`,
-        sourceUrl:
-          Math.random() > 0.5 ? randomItem(SOURCE_URLS) : "",
+        sourceUrl: Math.random() > 0.5 ? randomItem(SOURCE_URLS) : "",
         channelId: channel._id.toString(),
         channelName: channel.name,
         author: author.username,
@@ -374,15 +369,15 @@ async function seed() {
     }
   }
 
-  /* Batch insert claims */
   const BATCH_SIZE = 500;
   for (let i = 0; i < claims.length; i += BATCH_SIZE) {
     const batch = claims.slice(i, i + BATCH_SIZE);
     await db.collection("claims").insertMany(batch);
-    console.log(`  Inserted ${Math.min(i + BATCH_SIZE, claims.length)} / ${claims.length} claims`);
+    console.log(
+      `  Inserted ${Math.min(i + BATCH_SIZE, claims.length)} / ${claims.length} claims`
+    );
   }
 
-  /* Create indexes */
   console.log("Creating indexes...");
   await db.collection("claims").createIndex({ channelId: 1 });
   await db.collection("claims").createIndex({ credibilityScore: -1 });

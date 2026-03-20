@@ -5,7 +5,6 @@ const { getDb } = require("../db/connection");
 
 const router = express.Router();
 
-/* POST /api/auth/register */
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -42,7 +41,8 @@ router.post("/register", async (req, res) => {
       .findOne({ _id: result.insertedId });
 
     req.login(user, (err) => {
-      if (err) return res.status(500).json({ error: "Login after register failed." });
+      if (err)
+        return res.status(500).json({ error: "Login after register failed." });
       return res.status(201).json({
         _id: user._id,
         username: user.username,
@@ -54,14 +54,11 @@ router.post("/register", async (req, res) => {
   }
 });
 
-/* POST /api/auth/login */
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
-      return res
-        .status(401)
-        .json({ error: info?.message || "Login failed." });
+      return res.status(401).json({ error: info?.message || "Login failed." });
     }
     req.login(user, (loginErr) => {
       if (loginErr) return next(loginErr);
@@ -70,7 +67,6 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-/* POST /api/auth/logout */
 router.post("/logout", (req, res) => {
   req.logout((err) => {
     if (err) return res.status(500).json({ error: "Logout failed." });
@@ -81,7 +77,6 @@ router.post("/logout", (req, res) => {
   });
 });
 
-/* GET /api/auth/me */
 router.get("/me", (req, res) => {
   if (req.isAuthenticated()) {
     return res.json({ _id: req.user._id, username: req.user.username });

@@ -115,7 +115,9 @@ function EvidenceComment({ claimId, evidence, user, onEvidenceAdded }) {
             className={`evidence-item ${ev.supports ? "supports" : "debunks"}`}
           >
             <div className="evidence-item-header">
-              <span className={`evidence-badge ${ev.supports ? "badge-fact" : "badge-not"}`}>
+              <span
+                className={`evidence-badge ${ev.supports ? "badge-fact" : "badge-not"}`}
+              >
                 {ev.supports ? "Supports" : "Debunks"}
               </span>
               <span className="evidence-author">{ev.author}</span>

@@ -5,7 +5,6 @@ const { ensureAuthenticated } = require("../middleware/auth");
 
 const router = express.Router();
 
-/* GET /api/channels - list all channels */
 router.get("/", async (req, res) => {
   try {
     const db = getDb();
@@ -15,7 +14,6 @@ router.get("/", async (req, res) => {
       .sort({ name: 1 })
       .toArray();
 
-    /* attach claim counts */
     const countsAgg = await db
       .collection("claims")
       .aggregate([{ $group: { _id: "$channelId", count: { $sum: 1 } } }])
@@ -38,7 +36,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* GET /api/channels/:id - single channel */
 router.get("/:id", async (req, res) => {
   try {
     const db = getDb();
@@ -48,11 +45,8 @@ router.get("/:id", async (req, res) => {
     } catch {
       return res.status(400).json({ error: "Invalid channel ID." });
     }
-    const channel = await db
-      .collection("channels")
-      .findOne({ _id: channelId });
-    if (!channel)
-      return res.status(404).json({ error: "Channel not found." });
+    const channel = await db.collection("channels").findOne({ _id: channelId });
+    if (!channel) return res.status(404).json({ error: "Channel not found." });
     res.json(channel);
   } catch (err) {
     console.error("GET /channels/:id error:", err);
@@ -60,7 +54,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/* POST /api/channels - create a new channel */
 router.post("/", ensureAuthenticated, async (req, res) => {
   try {
     const { name, description, category } = req.body;
@@ -98,7 +91,6 @@ router.post("/", ensureAuthenticated, async (req, res) => {
   }
 });
 
-/* PUT /api/channels/:id - edit a channel (owner only) */
 router.put("/:id", ensureAuthenticated, async (req, res) => {
   try {
     const db = getDb();
@@ -109,11 +101,8 @@ router.put("/:id", ensureAuthenticated, async (req, res) => {
       return res.status(400).json({ error: "Invalid channel ID." });
     }
 
-    const channel = await db
-      .collection("channels")
-      .findOne({ _id: channelId });
-    if (!channel)
-      return res.status(404).json({ error: "Channel not found." });
+    const channel = await db.collection("channels").findOne({ _id: channelId });
+    if (!channel) return res.status(404).json({ error: "Channel not found." });
     if (channel.authorId !== req.user._id.toString()) {
       return res
         .status(403)
@@ -130,9 +119,7 @@ router.put("/:id", ensureAuthenticated, async (req, res) => {
       .collection("channels")
       .updateOne({ _id: channelId }, { $set: updates });
 
-    const updated = await db
-      .collection("channels")
-      .findOne({ _id: channelId });
+    const updated = await db.collection("channels").findOne({ _id: channelId });
     res.json(updated);
   } catch (err) {
     console.error("PUT /channels/:id error:", err);
@@ -140,7 +127,6 @@ router.put("/:id", ensureAuthenticated, async (req, res) => {
   }
 });
 
-/* DELETE /api/channels/:id - delete a channel (owner only) */
 router.delete("/:id", ensureAuthenticated, async (req, res) => {
   try {
     const db = getDb();
@@ -151,18 +137,14 @@ router.delete("/:id", ensureAuthenticated, async (req, res) => {
       return res.status(400).json({ error: "Invalid channel ID." });
     }
 
-    const channel = await db
-      .collection("channels")
-      .findOne({ _id: channelId });
-    if (!channel)
-      return res.status(404).json({ error: "Channel not found." });
+    const channel = await db.collection("channels").findOne({ _id: channelId });
+    if (!channel) return res.status(404).json({ error: "Channel not found." });
     if (channel.authorId !== req.user._id.toString()) {
       return res
         .status(403)
         .json({ error: "You can only delete your own channels." });
     }
 
-    /* also delete all claims in this channel */
     await db
       .collection("claims")
       .deleteMany({ channelId: channelId.toString() });

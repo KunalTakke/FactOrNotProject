@@ -39,9 +39,7 @@ function Login({ onLogin, onNavigate }) {
     <div className="auth-page">
       <div className="auth-card card">
         <h2 className="auth-title">Login to FactOrNot</h2>
-        <p className="auth-subtitle">
-          Verify claims. Fight misinformation.
-        </p>
+        <p className="auth-subtitle">Verify claims. Fight misinformation.</p>
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">

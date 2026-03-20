@@ -155,8 +155,8 @@ function ChannelForm({ user, editingChannel, onNavigate }) {
             {submitting
               ? "Saving..."
               : isEditing
-              ? "Update Channel"
-              : "Create Channel"}
+                ? "Update Channel"
+                : "Create Channel"}
           </button>
         </form>
       </div>

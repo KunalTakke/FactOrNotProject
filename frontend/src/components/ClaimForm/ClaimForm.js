@@ -59,9 +59,7 @@ function ClaimForm({ user, editingClaim, preselectedChannelId, onNavigate }) {
 
     setSubmitting(true);
     try {
-      const url = isEditing
-        ? `/api/claims/${editingClaim._id}`
-        : "/api/claims";
+      const url = isEditing ? `/api/claims/${editingClaim._id}` : "/api/claims";
       const method = isEditing ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -171,8 +169,8 @@ function ClaimForm({ user, editingClaim, preselectedChannelId, onNavigate }) {
             {submitting
               ? "Saving..."
               : isEditing
-              ? "Update Claim"
-              : "Submit Claim"}
+                ? "Update Claim"
+                : "Submit Claim"}
           </button>
         </form>
       </div>

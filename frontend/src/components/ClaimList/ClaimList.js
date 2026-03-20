@@ -127,9 +127,7 @@ function ClaimList({ user, channelId, onNavigate }) {
             <div
               key={claim._id}
               className="claim-card card"
-              onClick={() =>
-                onNavigate("claim-detail", { claimId: claim._id })
-              }
+              onClick={() => onNavigate("claim-detail", { claimId: claim._id })}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {

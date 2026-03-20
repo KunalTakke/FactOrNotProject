@@ -18,7 +18,6 @@ function App() {
   const [editingChannel, setEditingChannel] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => (res.ok ? res.json() : null))
@@ -40,16 +39,13 @@ function App() {
     setPage("claims");
   }, []);
 
-  const navigateTo = useCallback(
-    (newPage, options = {}) => {
-      setPage(newPage);
-      setSelectedClaimId(options.claimId || null);
-      setSelectedChannelId(options.channelId || null);
-      setEditingClaim(options.editingClaim || null);
-      setEditingChannel(options.editingChannel || null);
-    },
-    []
-  );
+  const navigateTo = useCallback((newPage, options = {}) => {
+    setPage(newPage);
+    setSelectedClaimId(options.claimId || null);
+    setSelectedChannelId(options.channelId || null);
+    setEditingClaim(options.editingClaim || null);
+    setEditingChannel(options.editingChannel || null);
+  }, []);
 
   if (loading) {
     return (
@@ -90,9 +86,7 @@ function App() {
           />
         );
       case "channels":
-        return (
-          <ChannelList user={user} onNavigate={navigateTo} />
-        );
+        return <ChannelList user={user} onNavigate={navigateTo} />;
       case "channel-form":
         return (
           <ChannelForm

@@ -68,7 +68,9 @@
 
 .claim-card {
   cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.1s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.1s;
 }
 
 .claim-card:hover {

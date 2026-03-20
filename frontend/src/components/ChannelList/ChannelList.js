@@ -81,7 +81,8 @@ function ChannelList({ user, onNavigate }) {
       ) : (
         <div className="channels-grid">
           {channels.map((ch) => {
-            const color = CATEGORY_COLORS[ch.category] || CATEGORY_COLORS.General;
+            const color =
+              CATEGORY_COLORS[ch.category] || CATEGORY_COLORS.General;
             const isOwner = user && ch.authorId === user._id;
 
             return (

@@ -78,9 +78,7 @@ function ClaimDetail({ claimId, user, onNavigate }) {
         <div className="claim-detail-header">
           <span
             className="tag tag-channel clickable-tag"
-            onClick={() =>
-              onNavigate("claims", { channelId: claim.channelId })
-            }
+            onClick={() => onNavigate("claims", { channelId: claim.channelId })}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
@@ -132,9 +130,7 @@ function ClaimDetail({ claimId, user, onNavigate }) {
             <button
               type="button"
               className="btn btn-sm btn-secondary"
-              onClick={() =>
-                onNavigate("claim-form", { editingClaim: claim })
-              }
+              onClick={() => onNavigate("claim-form", { editingClaim: claim })}
             >
               Edit Claim
             </button>
