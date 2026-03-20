@@ -1,0 +1,13 @@
+{
+  "name": "factornot",
+  "version": "1.0.0",
+  "description": "FactOrNot - Crowdsourced Truth in a World of Noise",
+  "license": "MIT",
+  "scripts": {
+    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && node server.js",
+    "seed": "cd backend && node seed.js",
+    "render-build": "npm run install-all && npm run build"
+  }
+}
