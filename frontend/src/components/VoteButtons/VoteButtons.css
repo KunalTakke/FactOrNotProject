@@ -1,0 +1,51 @@
+.vote-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.vote-btn {
+  padding: 8px 20px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.vote-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.vote-fact {
+  color: #06d6a0;
+  border-color: #06d6a0;
+}
+
+.vote-fact:hover:not(:disabled) {
+  background: #06d6a0;
+  color: #fff;
+}
+
+.vote-fact.active {
+  background: #06d6a0;
+  color: #fff;
+}
+
+.vote-not {
+  color: #ef476f;
+  border-color: #ef476f;
+}
+
+.vote-not:hover:not(:disabled) {
+  background: #ef476f;
+  color: #fff;
+}
+
+.vote-not.active {
+  background: #ef476f;
+  color: #fff;
+}

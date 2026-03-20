@@ -1,0 +1,97 @@
+.evidence-section {
+  margin-top: 24px;
+}
+
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.evidence-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.evidence-form {
+  margin-bottom: 16px;
+  border: 1px solid #4361ee;
+}
+
+.evidence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.evidence-empty {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.evidence-item {
+  padding: 14px;
+  border-radius: 8px;
+  border-left: 4px solid #ddd;
+  background: #fafafa;
+}
+
+.evidence-item.supports {
+  border-left-color: #06d6a0;
+}
+
+.evidence-item.debunks {
+  border-left-color: #ef476f;
+}
+
+.evidence-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+}
+
+.evidence-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.badge-fact {
+  background: #e6faf3;
+  color: #06d6a0;
+}
+
+.badge-not {
+  background: #fde8ee;
+  color: #ef476f;
+}
+
+.evidence-author {
+  font-weight: 600;
+  color: #555;
+}
+
+.evidence-date {
+  color: #aaa;
+}
+
+.evidence-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.evidence-source {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #4361ee;
+}

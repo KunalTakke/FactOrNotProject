@@ -1,0 +1,51 @@
+.credibility-meter {
+  margin: 12px 0;
+}
+
+.credibility-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.credibility-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.credibility-score {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.credibility-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.credibility-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.credibility-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.stat-fact {
+  color: #06d6a0;
+  font-weight: 600;
+}
+
+.stat-not {
+  color: #ef476f;
+  font-weight: 600;
+}

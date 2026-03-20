@@ -1,0 +1,14 @@
+.claim-form-page {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.form-subtitle {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.required {
+  color: #ef476f;
+}
