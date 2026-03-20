@@ -1,13 +1,17 @@
 # FactOrNot – Crowdsourced Truth in a World of Noise
 
-![FactOrNot Screenshot](./docs/dashboard.png.png)
+![FactOrNot Screenshot](./docs/dashboard.png)
 
 ## Authors
 
 - **Kunal Takke** – Claims & Verification (Create Claims, View/Browse Claims, Fact/Not Voting, Credibility Score Algorithm, Evidence Comments, Trending Sort, Category Filtering, Claim Editing, Claim Deletion)
 - **Kunal Juvvala** – Topics & Channels (Create Topics/Channels, View/Browse Channels, Channel Listing Page, Edit Channels, Delete Channels)
 
-## Class Link
+## Class Link 
+CS5610 - Web Development
+https://northeastern.instructure.com/courses/245751
+
+
 
 CS5610 – Web Development, Northeastern University  
 Professor John Alexis Guerra Gómez
