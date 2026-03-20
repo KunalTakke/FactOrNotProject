@@ -1,6 +1,6 @@
 # FactOrNot – Crowdsourced Truth in a World of Noise
 
-![FactOrNot Screenshot](screenshot.png)
+![FactOrNot Screenshot](./docs/dashboard.png.png)
 
 ## Authors
 
@@ -111,7 +111,6 @@ All seeded users use password `password123`.
 ### Environment Variables (optional)
 
 | Variable         | Default                              | Description             |
-| ---------------- | ------------------------------------ | ----------------------- |
 | `MONGO_URI`      | `mongodb://localhost:27017/factornot` | MongoDB connection URI  |
 | `PORT`           | `3001`                               | Backend server port     |
 | `SESSION_SECRET`  | `factornot-secret-key-change-in-prod` | Session encryption key  |

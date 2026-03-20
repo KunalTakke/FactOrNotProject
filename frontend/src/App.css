@@ -1,4 +1,4 @@
-/* ---- Reset & Global ---- */
+
 *,
 *::before,
 *::after {
@@ -24,7 +24,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ---- App Layout ---- */
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -57,7 +57,7 @@ a:hover {
   background: #fff;
 }
 
-/* ---- Shared UI ---- */
+
 .btn {
   display: inline-block;
   padding: 8px 18px;

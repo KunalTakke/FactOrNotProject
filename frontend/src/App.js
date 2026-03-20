@@ -18,7 +18,7 @@ function App() {
   const [editingChannel, setEditingChannel] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  /* Check session on mount */
+
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => (res.ok ? res.json() : null))
