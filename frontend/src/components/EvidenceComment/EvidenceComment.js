@@ -43,14 +43,16 @@ function EvidenceComment({ claimId, evidence, user, onEvidenceAdded }) {
   };
 
   return (
-    <div className="evidence-section">
+    <section className="evidence-section" aria-label="Evidence and comments">
       <div className="evidence-header">
-        <h3>Evidence &amp; Comments ({evidence.length})</h3>
+        <h2>Evidence &amp; Comments ({evidence.length})</h2>
         {user && (
           <button
             type="button"
             className="btn btn-sm btn-primary"
             onClick={() => setShowForm(!showForm)}
+            aria-expanded={showForm}
+            aria-controls="evidence-form"
           >
             {showForm ? "Cancel" : "+ Add Evidence"}
           </button>
@@ -58,9 +60,13 @@ function EvidenceComment({ claimId, evidence, user, onEvidenceAdded }) {
       </div>
 
       {showForm && (
-        <div className="evidence-form card">
-          {error && <p className="error-message">{error}</p>}
-          <form onSubmit={handleSubmit}>
+        <div id="evidence-form" className="evidence-form card">
+          {error && (
+            <p className="error-message" role="alert">
+              {error}
+            </p>
+          )}
+          <form onSubmit={handleSubmit} aria-label="Submit evidence">
             <div className="form-group">
               <label htmlFor="ev-comment">Your Analysis</label>
               <textarea
@@ -103,16 +109,17 @@ function EvidenceComment({ claimId, evidence, user, onEvidenceAdded }) {
         </div>
       )}
 
-      <div className="evidence-list">
+      <div className="evidence-list" aria-label="Evidence comments list">
         {evidence.length === 0 && (
           <p className="evidence-empty">
             No evidence submitted yet. Be the first to contribute!
           </p>
         )}
         {evidence.map((ev) => (
-          <div
+          <article
             key={ev._id}
             className={`evidence-item ${ev.supports ? "supports" : "debunks"}`}
+            aria-label={`Evidence by ${ev.author}, ${ev.supports ? "supports" : "debunks"} the claim`}
           >
             <div className="evidence-item-header">
               <span
@@ -121,9 +128,9 @@ function EvidenceComment({ claimId, evidence, user, onEvidenceAdded }) {
                 {ev.supports ? "Supports" : "Debunks"}
               </span>
               <span className="evidence-author">{ev.author}</span>
-              <span className="evidence-date">
+              <time className="evidence-date" dateTime={ev.createdAt}>
                 {new Date(ev.createdAt).toLocaleDateString()}
-              </span>
+              </time>
             </div>
             <p className="evidence-text">{ev.comment}</p>
             {ev.sourceUrl && (
@@ -136,10 +143,10 @@ function EvidenceComment({ claimId, evidence, user, onEvidenceAdded }) {
                 View Source
               </a>
             )}
-          </div>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

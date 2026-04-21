@@ -12,23 +12,72 @@ router.get("/", async (req, res) => {
     if (req.query.channelId) {
       filter.channelId = req.query.channelId;
     }
+
+    // USABILITY FIX: Improved search - split query into individual words
+    // so "water glasses" matches claims containing both words in any order
     if (req.query.search) {
-      filter.title = { $regex: req.query.search, $options: "i" };
+      const words = req.query.search.trim().split(/\s+/).filter(Boolean);
+      if (words.length === 1) {
+        filter.title = { $regex: words[0], $options: "i" };
+      } else if (words.length > 1) {
+        filter.$and = words.map((word) => ({
+          title: { $regex: word, $options: "i" },
+        }));
+      }
     }
 
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 20));
     const skip = (page - 1) * limit;
 
-    const sortField =
-      req.query.sort === "newest" ? "createdAt" : "credibilityScore";
-    const sortOrder = req.query.sort === "newest" ? -1 : -1;
+    let sortStage;
+    if (req.query.sort === "newest") {
+      sortStage = { createdAt: -1 };
+    } else if (req.query.sort === "contested") {
+      // USABILITY FIX: Most Contested sort
+      // Uses aggregation to sort by distance from 50%
+      // Claims nearest to 50% appear first (most divided)
+      const pipeline = [
+        { $match: filter },
+        {
+          $addFields: {
+            contestedScore: {
+              $abs: { $subtract: ["$credibilityScore", 50] },
+            },
+          },
+        },
+        { $sort: { contestedScore: 1, totalVotes: -1 } },
+        {
+          $facet: {
+            claims: [{ $skip: skip }, { $limit: limit }],
+            total: [{ $count: "count" }],
+          },
+        },
+      ];
+
+      const [result] = await db
+        .collection("claims")
+        .aggregate(pipeline)
+        .toArray();
+      const claims = result.claims || [];
+      const total = result.total[0]?.count || 0;
+
+      return res.json({
+        claims,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+      });
+    } else {
+      // Default: highest credibility first
+      sortStage = { credibilityScore: -1 };
+    }
 
     const [claims, total] = await Promise.all([
       db
         .collection("claims")
         .find(filter)
-        .sort({ [sortField]: sortOrder })
+        .sort(sortStage)
         .skip(skip)
         .limit(limit)
         .toArray(),
@@ -185,7 +234,7 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
     const claim = await db.collection("claims").findOne({ _id: claimId });
     if (!claim) return res.status(404).json({ error: "Claim not found." });
 
-    const odlUserKey = `voters.${req.user._id.toString()}`;
+    const userKey = `voters.${req.user._id.toString()}`;
     const previousVote = claim.voters?.[req.user._id.toString()];
 
     let inc = {};
@@ -195,7 +244,7 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
         [`${vote}Votes`]: -1,
         totalVotes: -1,
       };
-      const unsetUpdate = { $inc: inc, $unset: { [odlUserKey]: "" } };
+      const unsetUpdate = { $inc: inc, $unset: { [userKey]: "" } };
       await db.collection("claims").updateOne({ _id: claimId }, unsetUpdate);
     } else {
       if (previousVote) {
@@ -209,7 +258,7 @@ router.post("/:id/vote", ensureAuthenticated, async (req, res) => {
         { _id: claimId },
         {
           $inc: inc,
-          $set: { [odlUserKey]: vote },
+          $set: { [userKey]: vote },
         }
       );
     }

@@ -36,12 +36,16 @@ function Login({ onLogin, onNavigate }) {
   };
 
   return (
-    <div className="auth-page">
+    <section className="auth-page" aria-label="Login">
       <div className="auth-card card">
-        <h2 className="auth-title">Login to FactOrNot</h2>
+        <h1 className="auth-title">Login to FactOrNot</h1>
         <p className="auth-subtitle">Verify claims. Fight misinformation.</p>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
+        {error && (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} aria-label="Login form">
           <div className="form-group">
             <label htmlFor="login-username">Username</label>
             <input
@@ -82,7 +86,7 @@ function Login({ onLogin, onNavigate }) {
           Demo account: <strong>demo</strong> / <strong>demo</strong>
         </p>
       </div>
-    </div>
+    </section>
   );
 }
 

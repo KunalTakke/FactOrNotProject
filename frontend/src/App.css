@@ -1,3 +1,51 @@
+/* ============================================
+   DESIGN SYSTEM - CSS Custom Properties
+   Color Palette: Navy/Blue primary, Green approval, Red cancel
+   Typography: Space Grotesk (headings), Inter (body)
+   ============================================ */
+
+:root {
+  /* Color Palette */
+  --color-primary: #4361ee;
+  --color-primary-hover: #3a56d4;
+  --color-success: #06d6a0;
+  --color-success-hover: #05b88a;
+  --color-danger: #ef476f;
+  --color-danger-hover: #d63d60;
+  --color-warning: #ffd166;
+  --color-dark: #1a1a2e;
+  --color-text: #1a1a2e;
+  --color-text-secondary: #555;
+  --color-text-muted: #888;
+  --color-bg: #f0f2f5;
+  --color-card: #fff;
+  --color-border: #ddd;
+  --color-border-light: #eee;
+
+  /* Typography */
+  --font-heading:
+    "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Spacing Scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+  /* Focus Ring */
+  --focus-ring: 0 0 0 3px rgba(67, 97, 238, 0.4);
+}
+
 *,
 *::before,
 *::after {
@@ -7,22 +55,67 @@
 }
 
 body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
-  background-color: #f0f2f5;
-  color: #1a1a2e;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.6;
 }
 
+/* ============================================
+   GLOBAL FOCUS INDICATOR (Keyboard Accessibility)
+   ============================================ */
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Remove outline for mouse clicks but keep for keyboard */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================
+   SKIP TO CONTENT LINK (Accessibility)
+   ============================================ */
+
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-to-content:focus {
+  top: var(--space-sm);
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
 a {
-  color: #4361ee;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
 }
+
+/* ============================================
+   LAYOUT
+   ============================================ */
 
 .app {
   min-height: 100vh;
@@ -35,7 +128,7 @@ a:hover {
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: var(--space-lg) var(--space-md);
 }
 
 .app-loading {
@@ -44,25 +137,31 @@ a:hover {
   align-items: center;
   min-height: 100vh;
   font-size: 1.2rem;
-  color: #555;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
 }
 
 .app-footer {
   text-align: center;
-  padding: 16px;
-  color: #888;
+  padding: var(--space-md);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
-  border-top: 1px solid #ddd;
-  background: #fff;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-card);
 }
+
+/* ============================================
+   BUTTONS (consistent approval/cancel colors)
+   ============================================ */
 
 .btn {
   display: inline-block;
-  padding: 8px 18px;
+  padding: var(--space-sm) 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
+  font-family: var(--font-body);
   cursor: pointer;
   transition:
     background 0.2s,
@@ -78,12 +177,12 @@ a:hover {
 }
 
 .btn-primary {
-  background: #4361ee;
+  background: var(--color-primary);
   color: #fff;
 }
 
 .btn-primary:hover {
-  background: #3a56d4;
+  background: var(--color-primary-hover);
 }
 
 .btn-secondary {
@@ -96,21 +195,21 @@ a:hover {
 }
 
 .btn-danger {
-  background: #ef476f;
+  background: var(--color-danger);
   color: #fff;
 }
 
 .btn-danger:hover {
-  background: #d63d60;
+  background: var(--color-danger-hover);
 }
 
 .btn-success {
-  background: #06d6a0;
+  background: var(--color-success);
   color: #fff;
 }
 
 .btn-success:hover {
-  background: #05b88a;
+  background: var(--color-success-hover);
 }
 
 .btn-sm {
@@ -118,8 +217,12 @@ a:hover {
   font-size: 0.8rem;
 }
 
+/* ============================================
+   FORMS
+   ============================================ */
+
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-md);
 }
 
 .form-group label {
@@ -136,9 +239,9 @@ a:hover {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.95rem;
-  font-family: inherit;
+  font-family: var(--font-body);
   transition: border-color 0.2s;
 }
 
@@ -146,8 +249,8 @@ a:hover {
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #4361ee;
-  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
 }
 
 .form-group textarea {
@@ -156,54 +259,71 @@ a:hover {
 }
 
 .error-message {
-  color: #ef476f;
+  color: var(--color-danger);
   font-size: 0.85rem;
-  margin-top: 4px;
+  margin-top: var(--space-xs);
 }
 
 .success-message {
-  color: #06d6a0;
+  color: var(--color-success);
   font-size: 0.85rem;
-  margin-top: 4px;
+  margin-top: var(--space-xs);
 }
+
+/* ============================================
+   CARDS
+   ============================================ */
 
 .card {
-  background: #fff;
-  border-radius: 10px;
+  background: var(--color-card);
+  border-radius: var(--radius-md);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 20px;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-md);
 }
 
+/* ============================================
+   TYPOGRAPHY (Heading hierarchy)
+   ============================================ */
+
 .page-title {
+  font-family: var(--font-heading);
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #1a1a2e;
+  color: var(--color-dark);
 }
 
 .back-link {
   display: inline-block;
-  margin-bottom: 16px;
-  color: #4361ee;
+  margin-bottom: var(--space-md);
+  color: var(--color-primary);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  padding: 0;
 }
 
 .back-link:hover {
   text-decoration: underline;
 }
 
+/* ============================================
+   TAGS
+   ============================================ */
+
 .tag {
   display: inline-block;
   padding: 3px 10px;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   font-size: 0.75rem;
   font-weight: 600;
 }
 
 .tag-channel {
   background: #e8eaff;
-  color: #4361ee;
+  color: var(--color-primary);
 }

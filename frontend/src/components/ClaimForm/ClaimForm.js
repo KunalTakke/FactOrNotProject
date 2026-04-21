@@ -83,31 +83,45 @@ function ClaimForm({ user, editingClaim, preselectedChannelId, onNavigate }) {
   };
 
   return (
-    <div className="claim-form-page">
+    <section
+      className="claim-form-page"
+      aria-label={isEditing ? "Edit claim" : "Submit a claim"}
+    >
       <button
         type="button"
         className="back-link"
         onClick={() => onNavigate("claims")}
+        aria-label="Back to claims feed"
       >
         &larr; Back to Claims
       </button>
 
       <div className="card">
-        <h2 className="page-title">
+        <h1 className="page-title">
           {isEditing ? "Edit Claim" : "Submit a Claim"}
-        </h2>
+        </h1>
         <p className="form-subtitle">
           {isEditing
             ? "Update the details of your claim."
             : "Submit a claim, headline, or statement for the community to verify."}
         </p>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        )}
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          aria-label={isEditing ? "Edit claim form" : "Submit claim form"}
+        >
           <div className="form-group">
             <label htmlFor="claim-title">
-              Claim / Headline <span className="required">*</span>
+              Claim / Headline{" "}
+              <span className="required" aria-label="required">
+                *
+              </span>
             </label>
             <input
               id="claim-title"
@@ -116,6 +130,7 @@ function ClaimForm({ user, editingClaim, preselectedChannelId, onNavigate }) {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. AI will replace 40% of jobs within the next decade"
               maxLength={300}
+              required
             />
           </div>
 
@@ -144,12 +159,16 @@ function ClaimForm({ user, editingClaim, preselectedChannelId, onNavigate }) {
           {!isEditing && (
             <div className="form-group">
               <label htmlFor="claim-channel">
-                Channel <span className="required">*</span>
+                Channel{" "}
+                <span className="required" aria-label="required">
+                  *
+                </span>
               </label>
               <select
                 id="claim-channel"
                 value={channelId}
                 onChange={(e) => setChannelId(e.target.value)}
+                required
               >
                 <option value="">Select a channel...</option>
                 {channels.map((ch) => (
@@ -174,7 +193,7 @@ function ClaimForm({ user, editingClaim, preselectedChannelId, onNavigate }) {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 

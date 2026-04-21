@@ -85,31 +85,45 @@ function ChannelForm({ user, editingChannel, onNavigate }) {
   };
 
   return (
-    <div className="claim-form-page">
+    <section
+      className="claim-form-page"
+      aria-label={isEditing ? "Edit channel" : "Create channel"}
+    >
       <button
         type="button"
         className="back-link"
         onClick={() => onNavigate("channels")}
+        aria-label="Back to channels"
       >
         &larr; Back to Channels
       </button>
 
       <div className="card">
-        <h2 className="page-title">
+        <h1 className="page-title">
           {isEditing ? "Edit Channel" : "Create New Channel"}
-        </h2>
+        </h1>
         <p className="form-subtitle">
           {isEditing
             ? "Update the channel details."
             : "Create a topic channel for organizing claims by category."}
         </p>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        )}
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          aria-label={isEditing ? "Edit channel form" : "Create channel form"}
+        >
           <div className="form-group">
             <label htmlFor="ch-name">
-              Channel Name <span className="required">*</span>
+              Channel Name{" "}
+              <span className="required" aria-label="required">
+                *
+              </span>
             </label>
             <input
               id="ch-name"
@@ -118,6 +132,7 @@ function ChannelForm({ user, editingChannel, onNavigate }) {
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Climate Science"
               maxLength={100}
+              required
             />
           </div>
 
@@ -160,7 +175,7 @@ function ChannelForm({ user, editingChannel, onNavigate }) {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 

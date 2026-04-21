@@ -16,16 +16,34 @@ function CredibilityMeter({ score, factVotes, notVotes, totalVotes }) {
   };
 
   return (
-    <div className="credibility-meter">
+    <div
+      className="credibility-meter"
+      role="meter"
+      aria-valuenow={score}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label={`Credibility score: ${score}%, ${getLabel(score)}`}
+    >
       <div className="credibility-header">
         <span className="credibility-label" style={{ color: getColor(score) }}>
           {getLabel(score)}
         </span>
-        <span className="credibility-score" style={{ color: getColor(score) }}>
+        <span
+          className="credibility-score"
+          style={{ color: getColor(score) }}
+          aria-live="polite"
+        >
           {score}%
         </span>
       </div>
-      <div className="credibility-bar">
+      <div
+        className="credibility-bar"
+        role="progressbar"
+        aria-valuenow={score}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={`${score}% credibility`}
+      >
         <div
           className="credibility-fill"
           style={{

@@ -4,7 +4,7 @@
 }
 
 .claim-detail-card {
-  padding: 24px;
+  padding: var(--space-lg);
 }
 
 .claim-detail-header {
@@ -18,6 +18,8 @@
 
 .clickable-tag {
   cursor: pointer;
+  border: none;
+  font-family: var(--font-body);
 }
 
 .clickable-tag:hover {
@@ -26,20 +28,21 @@
 
 .claim-detail-date {
   font-size: 0.82rem;
-  color: #888;
+  color: var(--color-text-muted);
 }
 
 .claim-detail-title {
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1.3;
   margin-bottom: 12px;
-  color: #1a1a2e;
+  color: var(--color-text);
 }
 
 .claim-detail-desc {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--color-text-secondary);
   line-height: 1.6;
   margin-bottom: 12px;
 }
@@ -47,14 +50,32 @@
 .claim-source-link {
   display: inline-block;
   font-size: 0.85rem;
-  color: #4361ee;
-  margin-bottom: 16px;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+/* Evidence anchor link - visible without scrolling */
+.evidence-anchor-link {
+  display: inline-block;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  padding: var(--space-xs) 0;
+  margin-bottom: var(--space-sm);
+}
+
+.evidence-anchor-link:hover {
+  text-decoration: underline;
 }
 
 .claim-owner-actions {
   display: flex;
   gap: 10px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #eee;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-light);
 }

@@ -4,11 +4,11 @@
 }
 
 .form-subtitle {
-  color: #888;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   margin-bottom: 20px;
 }
 
 .required {
-  color: #ef476f;
+  color: var(--color-danger);
 }

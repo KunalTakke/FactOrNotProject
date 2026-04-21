@@ -88,6 +88,7 @@ Evidence comments let you support or debunk a claim with reasoning and sources.
 5. Click **Submit Evidence**.
 
 Evidence comments are color-coded:
+
 - **Green border** — Supports the claim.
 - **Red border** — Debunks the claim.
 

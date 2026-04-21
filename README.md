@@ -1,6 +1,7 @@
 # FactOrNot – Crowdsourced Truth in a World of Noise
 
-### Link 
+### Link
+
 https://factornotproject.onrender.com/
 
 ![FactOrNot Screenshot](./docs/dashboard.png)
@@ -10,11 +11,10 @@ https://factornotproject.onrender.com/
 - **Kunal Takke** – Claims & Verification (Create Claims, View/Browse Claims, Fact/Not Voting, Credibility Score Algorithm, Evidence Comments, Trending Sort, Category Filtering, Claim Editing, Claim Deletion)
 - **Kunal Juvvala** – Topics & Channels (Create Topics/Channels, View/Browse Channels, Channel Listing Page, Edit Channels, Delete Channels)
 
-## Class Link 
+## Class Link
+
 CS5610 - Web Development
 https://northeastern.instructure.com/courses/245751
-
-
 
 CS5610 – Web Development, Northeastern University  
 Professor John Alexis Guerra Gómez
@@ -117,10 +117,10 @@ All seeded users use password `password123`.
 
 ### Environment Variables (optional)
 
-| Variable         | Default                              | Description             |
-| `MONGO_URI`      | `mongodb://localhost:27017/factornot` | MongoDB connection URI  |
-| `PORT`           | `3001`                               | Backend server port     |
-| `SESSION_SECRET`  | `factornot-secret-key-change-in-prod` | Session encryption key  |
+| Variable | Default | Description |
+| `MONGO_URI` | `mongodb://localhost:27017/factornot` | MongoDB connection URI |
+| `PORT` | `3001` | Backend server port |
+| `SESSION_SECRET` | `factornot-secret-key-change-in-prod` | Session encryption key |
 
 ## Mongo Collections
 

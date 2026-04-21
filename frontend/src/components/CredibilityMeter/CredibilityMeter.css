@@ -10,11 +10,13 @@
 }
 
 .credibility-label {
+  font-family: var(--font-heading);
   font-weight: 600;
   font-size: 0.85rem;
 }
 
 .credibility-score {
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.1rem;
 }
@@ -37,15 +39,15 @@
   justify-content: space-between;
   margin-top: 6px;
   font-size: 0.78rem;
-  color: #888;
+  color: var(--color-text-muted);
 }
 
 .stat-fact {
-  color: #06d6a0;
+  color: var(--color-success);
   font-weight: 600;
 }
 
 .stat-not {
-  color: #ef476f;
+  color: var(--color-danger);
   font-weight: 600;
 }

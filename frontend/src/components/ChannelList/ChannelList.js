@@ -53,10 +53,15 @@ function ChannelList({ user, onNavigate }) {
     General: "#607d8b",
   };
 
-  if (loading) return <p className="loading-text">Loading channels...</p>;
+  if (loading)
+    return (
+      <p className="loading-text" role="status">
+        Loading channels...
+      </p>
+    );
 
   return (
-    <div className="channel-list-page">
+    <section className="channel-list-page" aria-label="Topic channels">
       <div className="channel-list-header">
         <h1 className="page-title">Topic Channels</h1>
         {user && (
@@ -86,28 +91,29 @@ function ChannelList({ user, onNavigate }) {
             const isOwner = user && ch.authorId === user._id;
 
             return (
-              <div key={ch._id} className="channel-card card">
-                <div
+              <article
+                key={ch._id}
+                className="channel-card card"
+                aria-label={`${ch.name} channel, ${ch.claimCount} claims`}
+              >
+                <button
+                  type="button"
                   className="channel-card-clickable"
                   onClick={() =>
                     onNavigate("claims", { channelId: ch._id.toString() })
                   }
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter")
-                      onNavigate("claims", { channelId: ch._id.toString() });
-                  }}
+                  aria-label={`Browse claims in ${ch.name} channel`}
                 >
                   <div className="channel-card-top">
                     <span
                       className="channel-icon"
                       style={{ backgroundColor: color }}
+                      aria-hidden="true"
                     >
                       {ch.name.charAt(0)}
                     </span>
                     <div>
-                      <h3 className="channel-name">{ch.name}</h3>
+                      <h2 className="channel-name">{ch.name}</h2>
                       <span className="channel-category" style={{ color }}>
                         {ch.category}
                       </span>
@@ -122,38 +128,34 @@ function ChannelList({ user, onNavigate }) {
                     </span>
                     <span className="channel-author">by {ch.author}</span>
                   </div>
-                </div>
+                </button>
 
                 {isOwner && (
                   <div className="channel-actions">
                     <button
                       type="button"
                       className="btn btn-sm btn-secondary"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigate("channel-form", { editingChannel: ch });
-                      }}
+                      onClick={() =>
+                        onNavigate("channel-form", { editingChannel: ch })
+                      }
                     >
                       Edit
                     </button>
                     <button
                       type="button"
                       className="btn btn-sm btn-danger"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(ch._id);
-                      }}
+                      onClick={() => handleDelete(ch._id)}
                     >
                       Delete
                     </button>
                   </div>
                 )}
-              </div>
+              </article>
             );
           })}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

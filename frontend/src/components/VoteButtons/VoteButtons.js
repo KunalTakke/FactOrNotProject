@@ -29,13 +29,14 @@ function VoteButtons({ claimId, user, currentVote, onVoteComplete }) {
   };
 
   return (
-    <div className="vote-buttons">
+    <div className="vote-buttons" role="group" aria-label="Vote on this claim">
       <button
         type="button"
         className={`vote-btn vote-fact ${currentVote === "fact" ? "active" : ""}`}
         onClick={() => handleVote("fact")}
         disabled={voting}
-        title="Vote Fact"
+        aria-pressed={currentVote === "fact"}
+        aria-label="Vote Fact"
       >
         &#x2713; Fact
       </button>
@@ -44,7 +45,8 @@ function VoteButtons({ claimId, user, currentVote, onVoteComplete }) {
         className={`vote-btn vote-not ${currentVote === "not" ? "active" : ""}`}
         onClick={() => handleVote("not")}
         disabled={voting}
-        title="Vote Not"
+        aria-pressed={currentVote === "not"}
+        aria-label="Vote Not"
       >
         &#x2717; Not
       </button>

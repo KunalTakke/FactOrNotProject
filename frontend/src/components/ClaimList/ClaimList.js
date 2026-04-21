@@ -54,7 +54,7 @@ function ClaimList({ user, channelId, onNavigate }) {
   };
 
   return (
-    <div className="claim-list-page">
+    <section className="claim-list-page" aria-label="Claims feed">
       <div className="claim-list-header">
         <h1 className="page-title">Claims Feed</h1>
         {user && (
@@ -70,27 +70,41 @@ function ClaimList({ user, channelId, onNavigate }) {
         )}
       </div>
 
-      <div className="claim-filters card">
-        <form onSubmit={handleSearch} className="filter-row">
+      {/* Search and filter controls */}
+      <section
+        className="claim-filters card"
+        aria-label="Search and filter claims"
+      >
+        <form onSubmit={handleSearch} className="filter-row" role="search">
+          <label htmlFor="claim-search" className="visually-hidden">
+            Search claims
+          </label>
           <input
+            id="claim-search"
             type="text"
             className="filter-search"
             placeholder="Search claims..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search claims by keyword"
           />
           <button type="submit" className="btn btn-primary btn-sm">
             Search
           </button>
         </form>
         <div className="filter-row">
+          <label htmlFor="channel-filter" className="visually-hidden">
+            Filter by channel
+          </label>
           <select
+            id="channel-filter"
             value={selectedChannel}
             onChange={(e) => {
               setSelectedChannel(e.target.value);
               setPage(1);
             }}
             className="filter-select"
+            aria-label="Filter by channel"
           >
             <option value="">All Channels</option>
             {channels.map((ch) => (
@@ -99,77 +113,91 @@ function ClaimList({ user, channelId, onNavigate }) {
               </option>
             ))}
           </select>
+          <label htmlFor="sort-select" className="visually-hidden">
+            Sort claims
+          </label>
           <select
+            id="sort-select"
             value={sort}
             onChange={(e) => {
               setSort(e.target.value);
               setPage(1);
             }}
             className="filter-select"
+            aria-label="Sort claims"
           >
-            <option value="credibility">Sort by Credibility</option>
-            <option value="newest">Sort by Newest</option>
+            <option value="credibility">Highest Credibility</option>
+            <option value="newest">Newest First</option>
+            <option value="contested">Most Contested</option>
           </select>
         </div>
-      </div>
+      </section>
 
-      <p className="claim-count">{total} claims found</p>
+      <p className="claim-count" aria-live="polite">
+        {total} claims found
+      </p>
 
       {loading ? (
-        <p className="loading-text">Loading claims...</p>
+        <p className="loading-text" role="status">
+          Loading claims...
+        </p>
       ) : claims.length === 0 ? (
         <div className="card empty-state">
           <p>No claims found. Be the first to submit one!</p>
         </div>
       ) : (
-        <div className="claims-grid">
+        <div className="claims-grid" role="feed" aria-label="Claims list">
           {claims.map((claim) => (
-            <div
+            <article
               key={claim._id}
               className="claim-card card"
-              onClick={() => onNavigate("claim-detail", { claimId: claim._id })}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter")
-                  onNavigate("claim-detail", { claimId: claim._id });
-              }}
+              aria-label={`Claim: ${claim.title}`}
             >
-              <div className="claim-card-header">
-                <span className="tag tag-channel">{claim.channelName}</span>
-                <span className="claim-date">
-                  {new Date(claim.createdAt).toLocaleDateString()}
-                </span>
-              </div>
-              <h3 className="claim-title">{claim.title}</h3>
-              <CredibilityMeter
-                score={claim.credibilityScore}
-                factVotes={claim.factVotes}
-                notVotes={claim.notVotes}
-                totalVotes={claim.totalVotes}
-              />
-              <div className="claim-card-footer">
-                <span className="claim-author">by {claim.author}</span>
-                <span className="claim-evidence">
-                  {claim.evidence ? claim.evidence.length : 0} evidence
-                </span>
-              </div>
-            </div>
+              <button
+                type="button"
+                className="claim-card-button"
+                onClick={() =>
+                  onNavigate("claim-detail", { claimId: claim._id })
+                }
+                aria-label={`View claim: ${claim.title}, credibility ${claim.credibilityScore}%`}
+              >
+                <div className="claim-card-header">
+                  <span className="tag tag-channel">{claim.channelName}</span>
+                  <span className="claim-date">
+                    {new Date(claim.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+                <h2 className="claim-title">{claim.title}</h2>
+                <CredibilityMeter
+                  score={claim.credibilityScore}
+                  factVotes={claim.factVotes}
+                  notVotes={claim.notVotes}
+                  totalVotes={claim.totalVotes}
+                />
+                <div className="claim-card-footer">
+                  <span className="claim-author">by {claim.author}</span>
+                  <span className="claim-evidence">
+                    {claim.evidence ? claim.evidence.length : 0} evidence
+                  </span>
+                </div>
+              </button>
+            </article>
           ))}
         </div>
       )}
 
       {totalPages > 1 && (
-        <div className="pagination">
+        <nav className="pagination" aria-label="Claims pagination">
           <button
             type="button"
             className="btn btn-sm btn-secondary"
             disabled={page <= 1}
             onClick={() => setPage((p) => p - 1)}
+            aria-label="Previous page"
           >
             Previous
           </button>
-          <span className="pagination-info">
+          <span className="pagination-info" aria-current="page">
             Page {page} of {totalPages}
           </span>
           <button
@@ -177,12 +205,13 @@ function ClaimList({ user, channelId, onNavigate }) {
             className="btn btn-sm btn-secondary"
             disabled={page >= totalPages}
             onClick={() => setPage((p) => p + 1)}
+            aria-label="Next page"
           >
             Next
           </button>
-        </div>
+        </nav>
       )}
-    </div>
+    </section>
   );
 }
 

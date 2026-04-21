@@ -1,5 +1,5 @@
 .evidence-section {
-  margin-top: 24px;
+  margin-top: var(--space-lg);
 }
 
 .evidence-header {
@@ -9,14 +9,15 @@
   margin-bottom: 12px;
 }
 
-.evidence-header h3 {
+.evidence-header h2 {
+  font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 600;
 }
 
 .evidence-form {
-  margin-bottom: 16px;
-  border: 1px solid #4361ee;
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-primary);
 }
 
 .evidence-list {
@@ -35,30 +36,30 @@
 
 .evidence-item {
   padding: 14px;
-  border-radius: 8px;
-  border-left: 4px solid #ddd;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--color-border);
   background: #fafafa;
 }
 
 .evidence-item.supports {
-  border-left-color: #06d6a0;
+  border-left-color: var(--color-success);
 }
 
 .evidence-item.debunks {
-  border-left-color: #ef476f;
+  border-left-color: var(--color-danger);
 }
 
 .evidence-item-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm);
   font-size: 0.8rem;
 }
 
 .evidence-badge {
   padding: 2px 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -66,17 +67,17 @@
 
 .badge-fact {
   background: #e6faf3;
-  color: #06d6a0;
+  color: var(--color-success);
 }
 
 .badge-not {
   background: #fde8ee;
-  color: #ef476f;
+  color: var(--color-danger);
 }
 
 .evidence-author {
   font-weight: 600;
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
 .evidence-date {
@@ -93,5 +94,5 @@
   display: inline-block;
   margin-top: 6px;
   font-size: 0.8rem;
-  color: #4361ee;
+  color: var(--color-primary);
 }

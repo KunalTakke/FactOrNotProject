@@ -6,8 +6,9 @@
 
 .vote-btn {
   padding: 8px 20px;
-  border: 2px solid #ddd;
-  border-radius: 6px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -21,31 +22,31 @@
 }
 
 .vote-fact {
-  color: #06d6a0;
-  border-color: #06d6a0;
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 .vote-fact:hover:not(:disabled) {
-  background: #06d6a0;
+  background: var(--color-success);
   color: #fff;
 }
 
 .vote-fact.active {
-  background: #06d6a0;
+  background: var(--color-success);
   color: #fff;
 }
 
 .vote-not {
-  color: #ef476f;
-  border-color: #ef476f;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 }
 
 .vote-not:hover:not(:disabled) {
-  background: #ef476f;
+  background: var(--color-danger);
   color: #fff;
 }
 
 .vote-not.active {
-  background: #ef476f;
+  background: var(--color-danger);
   color: #fff;
 }

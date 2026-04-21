@@ -4,21 +4,26 @@ import "./Navbar.css";
 
 function Navbar({ user, onLogout, onNavigate }) {
   return (
-    <nav className="navbar">
-      <div className="navbar-inner">
+    <header className="navbar" role="banner">
+      <nav className="navbar-inner" aria-label="Main navigation">
         <button
           type="button"
           className="navbar-brand"
           onClick={() => onNavigate("claims")}
+          aria-label="FactOrNot home"
         >
-          <span className="navbar-logo">&#x2713;</span> FactOrNot
+          <span className="navbar-logo" aria-hidden="true">
+            &#x2713;
+          </span>
+          FactOrNot
         </button>
 
-        <div className="navbar-links">
+        <div className="navbar-links" role="menubar">
           <button
             type="button"
             className="navbar-link"
             onClick={() => onNavigate("claims")}
+            role="menuitem"
           >
             Claims
           </button>
@@ -26,6 +31,7 @@ function Navbar({ user, onLogout, onNavigate }) {
             type="button"
             className="navbar-link"
             onClick={() => onNavigate("channels")}
+            role="menuitem"
           >
             Channels
           </button>
@@ -34,11 +40,17 @@ function Navbar({ user, onLogout, onNavigate }) {
         <div className="navbar-auth">
           {user ? (
             <>
-              <span className="navbar-user">Hi, {user.username}</span>
+              <span
+                className="navbar-user"
+                aria-label={`Logged in as ${user.username}`}
+              >
+                Hi, {user.username}
+              </span>
               <button
                 type="button"
                 className="btn btn-sm btn-secondary"
                 onClick={onLogout}
+                aria-label="Log out"
               >
                 Logout
               </button>
@@ -62,8 +74,8 @@ function Navbar({ user, onLogout, onNavigate }) {
             </>
           )}
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }
 

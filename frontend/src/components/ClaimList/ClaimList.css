@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-md);
 }
 
 .claim-filters {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-md);
 }
 
 .filter-row {
@@ -23,20 +23,23 @@
   flex: 1;
   padding: 8px 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
+  font-family: var(--font-body);
 }
 
 .filter-search:focus {
   outline: none;
-  border-color: #4361ee;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
 }
 
 .filter-select {
   padding: 8px 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
+  font-family: var(--font-body);
   background: #fff;
   cursor: pointer;
   min-width: 160px;
@@ -44,19 +47,19 @@
 
 .claim-count {
   font-size: 0.85rem;
-  color: #888;
-  margin-bottom: 12px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
 }
 
 .loading-text {
   text-align: center;
-  color: #888;
+  color: var(--color-text-muted);
   padding: 40px;
 }
 
 .empty-state {
   text-align: center;
-  color: #888;
+  color: var(--color-text-muted);
   padding: 40px;
 }
 
@@ -66,16 +69,36 @@
   gap: 12px;
 }
 
+/* Semantic: article wraps the card, button makes it clickable */
 .claim-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.claim-card-button {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  background: none;
   cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  color: inherit;
   transition:
     box-shadow 0.2s,
     transform 0.1s;
 }
 
-.claim-card:hover {
+.claim-card-button:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
+}
+
+.claim-card-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+  border-radius: var(--radius-md);
 }
 
 .claim-card-header {
@@ -91,10 +114,11 @@
 }
 
 .claim-title {
+  font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 600;
   line-height: 1.4;
-  color: #1a1a2e;
+  color: var(--color-text);
   margin-bottom: 4px;
 }
 
@@ -102,7 +126,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
-  color: #888;
+  color: var(--color-text-muted);
   margin-top: 8px;
 }
 
@@ -110,12 +134,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  margin-top: 24px;
-  padding: 16px;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
 }
 
 .pagination-info {
   font-size: 0.85rem;
   color: #666;
+}
+
+/* Accessibility: visually hidden but screen reader accessible */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

@@ -45,14 +45,18 @@ function Register({ onRegister, onNavigate }) {
   };
 
   return (
-    <div className="auth-page">
+    <section className="auth-page" aria-label="Create account">
       <div className="auth-card card">
-        <h2 className="auth-title">Create Account</h2>
+        <h1 className="auth-title">Create Account</h1>
         <p className="auth-subtitle">
           Join the community. Fight misinformation.
         </p>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
+        {error && (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} aria-label="Registration form">
           <div className="form-group">
             <label htmlFor="reg-username">Username</label>
             <input
@@ -101,7 +105,7 @@ function Register({ onRegister, onNavigate }) {
           </button>
         </p>
       </div>
-    </div>
+    </section>
   );
 }
 

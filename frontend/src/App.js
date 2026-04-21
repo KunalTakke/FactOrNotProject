@@ -49,7 +49,11 @@ function App() {
 
   if (loading) {
     return (
-      <div className="app-loading">
+      <div
+        className="app-loading"
+        role="status"
+        aria-label="Loading application"
+      >
         <h2>Loading FactOrNot...</h2>
       </div>
     );
@@ -109,8 +113,14 @@ function App() {
 
   return (
     <div className="app">
+      {/* Skip to content link for keyboard accessibility */}
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
       <Navbar user={user} onLogout={handleLogout} onNavigate={navigateTo} />
-      <main className="app-main">{renderPage()}</main>
+      <main id="main-content" className="app-main">
+        {renderPage()}
+      </main>
       <footer className="app-footer">
         <p>
           FactOrNot &copy; 2025 &mdash; Crowdsourced Truth in a World of Noise

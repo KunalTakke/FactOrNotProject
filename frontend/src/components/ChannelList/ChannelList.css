@@ -6,7 +6,7 @@
 }
 
 .channel-subtitle {
-  color: #888;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   margin-bottom: 20px;
 }
@@ -14,25 +14,43 @@
 .channels-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+  gap: var(--space-md);
 }
 
 .channel-card {
   display: flex;
   flex-direction: column;
-  transition:
-    box-shadow 0.2s,
-    transform 0.1s;
+  padding: 0;
+  overflow: hidden;
 }
 
 .channel-card:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Semantic: proper button for clickable area */
+.channel-card-clickable {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  color: inherit;
+  flex: 1;
+  transition: transform 0.1s;
+}
+
+.channel-card-clickable:hover {
   transform: translateY(-2px);
 }
 
-.channel-card-clickable {
-  cursor: pointer;
-  flex: 1;
+.channel-card-clickable:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+  border-radius: var(--radius-md);
 }
 
 .channel-card-top {
@@ -45,20 +63,22 @@
 .channel-icon {
   width: 42px;
   height: 42px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.2rem;
   flex-shrink: 0;
 }
 
 .channel-name {
+  font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 600;
-  color: #1a1a2e;
+  color: var(--color-text);
 }
 
 .channel-category {
@@ -83,13 +103,12 @@
 
 .channel-claims-count {
   font-weight: 600;
-  color: #4361ee;
+  color: var(--color-primary);
 }
 
 .channel-actions {
   display: flex;
   gap: 8px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #eee;
+  padding: 12px 20px;
+  border-top: 1px solid var(--color-border-light);
 }
