@@ -13,8 +13,6 @@ router.get("/", async (req, res) => {
       filter.channelId = req.query.channelId;
     }
 
-    // USABILITY FIX: Improved search - split query into individual words
-    // so "water glasses" matches claims containing both words in any order
     if (req.query.search) {
       const words = req.query.search.trim().split(/\s+/).filter(Boolean);
       if (words.length === 1) {
@@ -34,9 +32,6 @@ router.get("/", async (req, res) => {
     if (req.query.sort === "newest") {
       sortStage = { createdAt: -1 };
     } else if (req.query.sort === "contested") {
-      // USABILITY FIX: Most Contested sort
-      // Uses aggregation to sort by distance from 50%
-      // Claims nearest to 50% appear first (most divided)
       const pipeline = [
         { $match: filter },
         {
